@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090c0f">
+  <meta name="description" content="Mosquittoz is a three-minute asymmetric multiplayer hunt: one human, everyone else bites.">
+  <meta property="og:title" content="Mosquittoz — One human. Everyone else bites.">
+  <meta property="og:description" content="Hide, hunt, or drain the hunter before three minutes run out.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yoxyfel.github.io/mosquittoz/">
+  <meta property="og:image" content="https://yoxyfel.github.io/mosquittoz/assets/average-mosquito.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Mosquittoz — One human. Everyone else bites.</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="stylesheet" href="./styles.css?v=20260717">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="noise" aria-hidden="true"></div>
+  <header class="site-header" data-header>
+    <a class="wordmark" href="#top" aria-label="Mosquittoz home">
+      <svg aria-hidden="true" viewBox="0 0 38 38">
+        <path d="M7 20.5 20 16l11-9-7.5 12L31 31l-11-8.5L7 27l8-6.5Z"/>
+        <circle cx="18.7" cy="19.7" r="3.2"/>
+      </svg>
+      <span>MOSQUITTOZ</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#roles">Roles</a>
+      <a href="#field-test">Field test</a>
+      <a href="#bodies">Bodies</a>
+      <a class="nav-build" href="https://github.com/YOxyfel/mosquittoz" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-copy" data-reveal>
+        <div class="eyebrow"><span class="pulse-dot"></span> Unreal Engine multiplayer prototype</div>
+        <h1 id="hero-title">
+          <span>One human.</span>
+          <span class="outline-text">Everyone else</span>
+          <span>bites.</span>
+        </h1>
+        <p class="hero-lede">A three-minute asymmetric hunt where the room is enormous, the hunter is armed, and hunger is always thirty seconds away.</p>
+        <div class="hero-actions">
+            <a class="button button-primary" href="#play-demo"><span>Try the 20-second demo</span><b aria-hidden="true">↓</b></a>
+          <a class="button button-ghost" href="#roles">Know your role</a>
+        </div>
+        <ul class="hero-facts" aria-label="Game facts">
+          <li><strong>01</strong><span>Hunter</span></li>
+          <li><strong>03</strong><span>Minute rounds</span></li>
+          <li><strong>03</strong><span>Mosquito bodies</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-specimen" data-reveal data-delay="1">
+        <div class="specimen-frame" data-tilt-card>
+          <div class="specimen-corners" aria-hidden="true"></div>
+          <img src="./assets/average-mosquito.webp" width="1280" height="720" alt="The Average and Fat mosquito model rendered in Unreal Engine">
+          <div class="specimen-scan" aria-hidden="true"></div>
+          <div class="specimen-label top"><span>SUBJECT / M-03</span><span>LIVE</span></div>
+          <div class="specimen-label bottom"><span>AVERAGE + FAT</span><span>CAPACITY 22U</span></div>
+          <svg class="flight-path" aria-hidden="true" viewBox="0 0 530 530">
+            <path d="M25 390C92 267 115 458 217 340s142-89 184-202c25-66 64-70 104-86"/>
+          </svg>
+        </div>
+        <div class="telemetry" aria-label="Average mosquito telemetry">
+          <div><span>FLIGHT</span><b>775</b><small>UU/S</small></div>
+          <div><span>SUCK</span><b>3.0</b><small>SEC</small></div>
+          <div><span>BITE</span><b>1.5</b><small>DMG</small></div>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#roles" aria-label="Scroll to roles"><span>SCROLL TO ENTER</span><i></i></a>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>HIDE IN THE CLUTTER</span><i>✦</i><span>OUTFLY THE SWAT</span><i>✦</i><span>DRINK. INTEGRATE. SURVIVE.</span><i>✦</i>
+        <span>HIDE IN THE CLUTTER</span><i>✦</i><span>OUTFLY THE SWAT</span><i>✦</i><span>DRINK. INTEGRATE. SURVIVE.</span><i>✦</i>
+      </div>
+    </div>
+
+    <section class="roles section-pad" id="roles" aria-labelledby="roles-title">
+      <header class="section-heading" data-reveal>
+        <span class="section-index">01 / THE SIDES</span>
+        <h2 id="roles-title">Same room.<br>Different scale.</h2>
+        <p>Every round is a compact game of information: the swarm has hiding time, the hunter has reach, and every mistake makes noise.</p>
+      </header>
+
+      <div class="role-grid">
+        <article class="role-card role-human" data-reveal>
+          <div class="role-number">01</div>
+          <div class="role-image">
+            <img src="./assets/human-hunter.webp" width="1280" height="720" loading="lazy" alt="The human hunter model rendered in Unreal Engine">
+            <span class="role-tag">THE HUNTER</span>
+          </div>
+          <div class="role-copy">
+            <h3>Find the buzz.<br><em>End the round.</em></h3>
+            <p>Enter after the hiding countdown. Spam quick swats to control space or charge one heavy swing when the target commits.</p>
+            <ul>
+              <li><span>01</span>Quick attack — fast, repeatable pressure</li>
+              <li><span>02</span>Charged attack — slow, wide, decisive</li>
+              <li><span>03</span>First-person movement and jumping</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="role-card role-mosquito" data-reveal data-delay="1">
+          <div class="role-number">∞</div>
+          <div class="role-image role-image-dark">
+            <img src="./assets/average-mosquito.webp" width="1280" height="720" loading="lazy" alt="The Average mosquito in Unreal Engine">
+            <span class="role-tag">THE SWARM</span>
+          </div>
+          <div class="role-copy">
+            <h3>Disappear first.<br><em>Feed second.</em></h3>
+            <p>Use full 3D flight, clutter and perching to vanish. In Blood Hunt, every feeding attempt is a trade between survival time and exposure.</p>
+            <ul>
+              <li><span>Q / E</span>Climb and descend on the Z axis</li>
+              <li><span>SHIFT</span>Boost — fast and harder to track</li>
+              <li><span>F</span>Perch and let the room swallow you</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="field-test section-pad" id="field-test" aria-labelledby="demo-title">
+      <header class="section-heading inverse" data-reveal>
+        <span class="section-index">02 / BROWSER FIELD TEST</span>
+        <h2 id="demo-title">Twenty seconds.<br>Don’t get flattened.</h2>
+        <p>A tiny playable approximation—not the full game. Steer the Average mosquito, use cover, and feed while the hunter’s swats are telegraphed.</p>
+      </header>
+
+      <div class="demo-console" id="play-demo" data-reveal>
+        <div class="console-bar">
+          <div class="console-brand"><span class="pulse-dot"></span> MOSQ_SIM / BUILD 0.1</div>
+          <div class="mode-switch" role="group" aria-label="Demo mode">
+            <button type="button" class="is-active" data-mode="blood" aria-pressed="true">Blood Hunt</button>
+            <button type="button" data-mode="survival" aria-pressed="false">Survival</button>
+          </div>
+          <button class="sound-toggle" type="button" data-sound aria-pressed="false" aria-label="Turn demo sound on">
+            <span aria-hidden="true">SOUND / OFF</span>
+          </button>
+        </div>
+
+        <div class="demo-stage" tabindex="0" role="application" aria-label="Mosquittoz browser field test. Use WASD or arrow keys to steer. Use Q and E for altitude. Hold Space or F near the red bite zone to feed.">
+          <canvas id="demo-canvas" width="960" height="540">Your browser does not support the playable canvas preview.</canvas>
+
+          <div class="demo-intro" data-demo-intro>
+            <span class="intro-kicker">AVERAGE + FAT / FIELD UNIT 03</span>
+            <h3>Blood is time.</h3>
+            <p>Survive the hunter. In Blood Hunt, land on the pulse and hold <kbd>SPACE</kbd> to fill two blood units.</p>
+            <button class="button button-primary demo-start" type="button" data-demo-start><span>Start field test</span><b aria-hidden="true">→</b></button>
+            <small>Keyboard, mouse and touch supported</small>
+          </div>
+
+          <div class="demo-result" data-demo-result hidden>
+            <span class="intro-kicker" data-result-kicker>FIELD TEST COMPLETE</span>
+            <h3 data-result-title>You lived.</h3>
+            <p data-result-copy>The hunter is going to need a bigger swatter.</p>
+            <button class="button button-primary" type="button" data-demo-replay><span>Run it again</span><b aria-hidden="true">↻</b></button>
+          </div>
+
+          <div class="touch-controls" role="group" aria-label="Touch flight controls">
+            <div class="touch-stick" data-stick aria-hidden="true"><i data-stick-knob></i></div>
+            <div class="touch-actions">
+              <button type="button" data-touch-action="up" aria-label="Fly up">UP</button>
+              <button type="button" class="feed" data-touch-action="feed" aria-label="Feed">FEED</button>
+              <button type="button" data-touch-action="down" aria-label="Fly down">DOWN</button>
+            </div>
+          </div>
+          <div class="screen-flash" aria-hidden="true"></div>
+        </div>
+
+        <div class="console-footer">
+          <div class="demo-stat"><span>TIME</span><strong data-demo-time>00:20</strong></div>
+          <div class="demo-stat grow"><span>DURABILITY</span><div class="meter"><i data-health-meter></i></div><strong data-demo-health>17 / 17</strong></div>
+          <div class="demo-stat grow"><span>BLOOD</span><div class="meter blood"><i data-blood-meter></i></div><strong data-demo-blood>0 / 2</strong></div>
+          <div class="demo-stat alert-stat"><span>HUNTER</span><strong data-demo-alert>ABSENT</strong></div>
+        </div>
+        <p class="demo-help"><strong>MOVE</strong> WASD / arrows / pointer &nbsp; <strong>ALTITUDE</strong> Q / E &nbsp; <strong>FEED</strong> hold Space / F &nbsp; <strong>BOOST</strong> Shift</p>
+        <p class="sr-only" aria-live="polite" data-demo-announcer></p>
+      </div>
+    </section>
+
+    <section class="bodies section-pad" id="bodies" aria-labelledby="bodies-title">
+      <header class="section-heading" data-reveal>
+        <span class="section-index">03 / CHOOSE A BODY</span>
+        <h2 id="bodies-title">No perfect build.<br>Only better risks.</h2>
+        <p>Five seconds before travel, every mosquito chooses how it wants to survive the next three minutes.</p>
+      </header>
+
+      <div class="body-cards">
+        <article class="body-card big" data-reveal>
+          <div class="body-icon" aria-hidden="true"><i></i><i></i><b></b></div>
+          <span class="body-code">M-01 / HEAVY</span>
+          <h3>Big &amp; Slow</h3>
+          <p>A loud target with a brutal bite. Three quick hits can’t finish it—but one charged swat can.</p>
+          <dl><div><dt>BITE</dt><dd>×3.0</dd></div><div><dt>SUCK</dt><dd>5 SEC</dd></div><div><dt>QUICK HITS</dt><dd>3 + 1</dd></div></dl>
+        </article>
+        <article class="body-card small" data-reveal data-delay="1">
+          <div class="body-icon" aria-hidden="true"><i></i><i></i><b></b></div>
+          <span class="body-code">M-02 / SCOUT</span>
+          <h3>Small &amp; Fast</h3>
+          <p>The hardest silhouette to track. Feeding is quick, damage is light, and two quick hits end the flight.</p>
+          <dl><div><dt>BITE</dt><dd>×0.5</dd></div><div><dt>SUCK</dt><dd>2 SEC</dd></div><div><dt>TOP SPEED</dt><dd>1200</dd></div></dl>
+        </article>
+        <article class="body-card average featured" data-reveal data-delay="2">
+          <div class="recommended">MODEL IN GAME</div>
+          <div class="body-icon" aria-hidden="true"><i></i><i></i><b></b></div>
+          <span class="body-code">M-03 / RESERVOIR</span>
+          <h3>Average &amp; Fat</h3>
+          <p>Balanced flight with a huge blood reserve. Seventeen quick hits or four charged hits to finish.</p>
+          <dl><div><dt>BITE</dt><dd>×1.5</dd></div><div><dt>SUCK</dt><dd>3 SEC</dd></div><div><dt>CAPACITY</dt><dd>22 U</dd></div></dl>
+        </article>
+      </div>
+    </section>
+
+    <section class="round-flow" aria-labelledby="flow-title">
+      <div class="flow-copy section-pad" data-reveal>
+        <span class="section-index">04 / ONE ROUND</span>
+        <h2 id="flow-title">Choose.<br>Hide.<br>Hunt.</h2>
+      </div>
+      <ol class="flow-steps">
+        <li data-reveal><span>00:05</span><div><b>Body select</b><p>The swarm locks its archetypes while everyone is still human in the lobby.</p></div></li>
+        <li data-reveal><span>00:15</span><div><b>Hide phase</b><p>Mosquitoes enter the arena. The hunter is physically absent until countdown zero.</p></div></li>
+        <li data-reveal><span>03:00</span><div><b>Round live</b><p>The hunter spawns. Survive the clock—or drain the human before it expires.</p></div></li>
+        <li data-reveal><span>RESET</span><div><b>Back to lobby</b><p>Every player returns as a visible human. Change map, mode, and run it again.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="modes section-pad" id="modes" aria-labelledby="modes-title">
+      <header class="section-heading compact" data-reveal>
+        <span class="section-index">05 / TWO RULESETS</span>
+        <h2 id="modes-title">Fear, with options.</h2>
+      </header>
+      <div class="mode-panels">
+        <article class="mode-panel survival" data-reveal>
+          <span>MODE 01</span><h3>Just hide.</h3>
+          <p>No blood economy. No reason to approach the human. Use the whole room and keep one wingbeat alive until the clock hits zero.</p>
+          <strong>SURVIVE 03:00</strong>
+        </article>
+        <article class="mode-panel blood-hunt" data-reveal data-delay="1">
+          <span>MODE 02</span><h3>Blood Hunt.</h3>
+          <p>Feeding damages the hunter and fills storage. Every unit buys thirty seconds—but overfilling can make the mosquito explode.</p>
+          <strong>FEED OR STARVE</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="build-status section-pad" aria-labelledby="build-title">
+      <div class="status-card" data-reveal>
+        <div>
+          <span class="section-index">CURRENT BUILD / ALPHA</span>
+          <h2 id="build-title">The hunt is playable.<br>The room is still growing.</h2>
+          <p>C++-first Unreal Engine 5.8 prototype with replicated roles, lobby flow, session discovery, two modes, three mosquito classes, native placeholder animation and packaged Windows builds.</p>
+        </div>
+        <div class="status-list">
+          <p><i class="status-ready"></i><span>Gameplay systems</span><b>ONLINE</b></p>
+          <p><i class="status-ready"></i><span>LAN listen servers</span><b>ONLINE</b></p>
+          <p><i class="status-active"></i><span>Final art + audio</span><b>IN PROGRESS</b></p>
+          <p><i class="status-next"></i><span>Internet backend</span><b>NEXT</b></p>
+        </div>
+      </div>
+      <div class="honest-note" data-reveal>
+        <b>ALPHA NOTE</b>
+        <p>Current discovery uses Unreal’s OnlineSubsystemNull and is intended for LAN testing. Region, ping and mod filters are UI-ready metadata—not global matchmaking yet.</p>
+      </div>
+    </section>
+
+    <section class="final-cta" aria-labelledby="cta-title">
+      <div class="cta-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+      <span class="section-index">YOUR WINDOW IS OPEN</span>
+      <h2 id="cta-title">Hear that?</h2>
+      <p>It is already in the room.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#play-demo"><span>Run the field test</span><b aria-hidden="true">↑</b></a>
+        <a class="button button-ghost light" href="https://github.com/YOxyfel/mosquittoz" target="_blank" rel="noreferrer">Follow development ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="wordmark" href="#top"><span>MOSQUITTOZ</span></a>
+    <p>One human. Everyone else bites.</p>
+    <div><span>UNREAL ENGINE 5.8</span><span>C++-FIRST HYBRID</span><span>© 2026</span></div>
+  </footer>
+
+  <script src="./demo.js?v=20260717" defer></script>
+  <script src="./site.js?v=20260717" defer></script>
+</body>
+</html>
