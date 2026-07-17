@@ -25,10 +25,9 @@ All asset paths are repository-relative so the project works under the `/mosquit
 ## Field test controls
 
 - `WASD` or arrow keys: steer
-- `Q` / `E`: rise / descend
 - `Shift`: boost
-- `Ctrl`: brake
-- Hold `Space` or `F`: feed near the bite zone
+- `Ctrl`: brake and land near cover
+- Click the bite zone, or hold `Space` or `F` inside it: feed
 - `Esc`: pause
 
-Pointer steering and touch controls are also supported.
+Altitude is handled automatically in the browser preview. Pointer steering and touch controls are also supported.

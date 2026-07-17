@@ -53,11 +53,10 @@
     pointerActive: false,
     pointerX: WIDTH / 2,
     pointerY: HEIGHT / 2,
+    pointerFeed: false,
     joystickX: 0,
     joystickY: 0,
-    touchFeed: false,
-    touchUp: false,
-    touchDown: false
+    touchFeed: false
   };
 
   const game = {
@@ -154,7 +153,7 @@
   function isControlKey(code) {
     return [
       "KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
-      "KeyQ", "KeyE", "KeyF", "Space", "ShiftLeft", "ShiftRight", "ControlLeft", "ControlRight", "Escape"
+      "KeyF", "Space", "ShiftLeft", "ShiftRight", "ControlLeft", "ControlRight", "Escape"
     ].includes(code);
   }
 
@@ -192,6 +191,7 @@
     game.effects.length = 0;
     game.particles.length = 0;
     input.pointerActive = false;
+    input.pointerFeed = false;
     input.keys.clear();
     resetPlayer();
     updateHud();
@@ -269,7 +269,7 @@
       bloodLabel.textContent = "DISABLED";
     } else {
       heading.textContent = "Blood is time.";
-      copy.innerHTML = "Survive the hunter. Land on the pulse and hold <kbd>SPACE</kbd> to fill two blood units.";
+      copy.innerHTML = "Click the red pulse, or enter it and hold <kbd>SPACE</kbd> or <kbd>F</kbd>, to fill two blood units.";
       bloodLabel.textContent = "0 / 2";
     }
   }
@@ -293,7 +293,7 @@
   }
 
   function feedHeld() {
-    return input.keys.has("Space") || input.keys.has("KeyF") || input.touchFeed;
+    return input.keys.has("Space") || input.keys.has("KeyF") || input.pointerFeed || input.touchFeed;
   }
 
   function updatePlayer(delta) {
@@ -348,9 +348,10 @@
       player.angle = Math.atan2(player.vy, player.vx);
     }
 
-    const rising = input.keys.has("KeyQ") || input.touchUp;
-    const descending = input.keys.has("KeyE") || input.touchDown;
-    player.z = clamp(player.z + ((rising ? 1 : 0) - (descending ? 1 : 0)) * delta * 0.75, 0, 1);
+    const nearFeedTarget = game.mode === "blood" && distance(player.x, player.y, game.feedTarget.x, game.feedTarget.y) < 110;
+    const landing = braking || (feedHeld() && nearFeedTarget) || player.feeding;
+    const targetAltitude = landing ? 0.16 : boosting ? 0.86 : 0.68;
+    player.z = lerp(player.z, targetAltitude, 1 - Math.exp(-delta * (landing ? 8 : 3.5)));
     player.hidden = playerInCover();
 
     if (boosting && Math.random() < delta * 18) {
@@ -365,11 +366,16 @@
       return;
     }
 
-    const nearTarget = distance(game.player.x, game.player.y, game.feedTarget.x, game.feedTarget.y) < 55;
-    const landed = game.player.z < 0.32;
-    game.player.feeding = nearTarget && landed && feedHeld();
+    const nearTarget = distance(game.player.x, game.player.y, game.feedTarget.x, game.feedTarget.y) < 82;
+    const attempting = feedHeld();
+    game.player.feeding = nearTarget && attempting;
 
     if (game.player.feeding) {
+      const lock = 1 - Math.exp(-delta * 10);
+      game.player.x = lerp(game.player.x, game.feedTarget.x, lock);
+      game.player.y = lerp(game.player.y, game.feedTarget.y, lock);
+      game.player.vx *= Math.pow(0.008, delta);
+      game.player.vy *= Math.pow(0.008, delta);
       game.feedProgress += delta / 3;
       game.hunterAlert = clamp(game.hunterAlert + delta * 0.45, 0, 1);
       if (Math.random() < delta * 15) {
@@ -379,6 +385,7 @@
       if (game.feedProgress >= 1) {
         game.feedProgress = 0;
         game.blood += 1;
+        input.pointerFeed = false;
         game.feedTarget.y = game.feedTarget.y === 352 ? 374 : 352;
         announceMessage(`BLOOD UNIT ${game.blood} SECURED`, 1.4);
         for (let i = 0; i < 22; i += 1) {
@@ -390,7 +397,8 @@
         }
       }
     } else {
-      game.feedProgress = Math.max(0, game.feedProgress - delta * 1.35);
+      if (attempting && game.messageTime <= 0.08) announceMessage("FOLLOW THE RED PULSE", 0.75);
+      game.feedProgress = Math.max(0, game.feedProgress - delta * 0.55);
     }
   }
 
@@ -642,26 +650,34 @@
     ctx.save();
     ctx.globalAlpha = .5 + pulse * .35;
     ctx.strokeStyle = colors.coral;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2.5;
     ctx.beginPath();
-    ctx.arc(target.x, target.y, 20 + pulse * 7, 0, TAU);
+    ctx.arc(target.x, target.y, 42 + pulse * 8, 0, TAU);
     ctx.stroke();
-    ctx.globalAlpha = .18;
+    ctx.setLineDash([4, 5]);
+    ctx.globalAlpha = .35;
+    ctx.beginPath();
+    ctx.arc(target.x, target.y, 68, 0, TAU);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = .22;
     ctx.fillStyle = colors.coral;
     ctx.beginPath();
-    ctx.arc(target.x, target.y, 15, 0, TAU);
+    ctx.arc(target.x, target.y, 25, 0, TAU);
     ctx.fill();
     ctx.globalAlpha = 1;
     ctx.fillStyle = "#ffd1c9";
     ctx.font = "700 7px Cascadia Mono, monospace";
     ctx.textAlign = "center";
-    ctx.fillText("BITE ZONE", target.x, target.y - 31);
+    const inRange = distance(game.player.x, game.player.y, target.x, target.y) < 82;
+    const feedLabel = game.player.feeding ? `FEEDING ${Math.round(game.feedProgress * 100)}%` : inRange ? "CLICK OR HOLD SPACE / F" : "CLICK TO FEED";
+    ctx.fillText(feedLabel, target.x, target.y - 55);
 
     if (game.feedProgress > 0) {
       ctx.strokeStyle = colors.paper;
       ctx.lineWidth = 5;
       ctx.beginPath();
-      ctx.arc(target.x, target.y, 34, -Math.PI / 2, -Math.PI / 2 + TAU * game.feedProgress);
+      ctx.arc(target.x, target.y, 54, -Math.PI / 2, -Math.PI / 2 + TAU * game.feedProgress);
       ctx.stroke();
       ctx.fillStyle = "#fff";
       ctx.font = "800 8px Cascadia Mono, monospace";
@@ -804,10 +820,11 @@
     ctx.stroke();
     ctx.restore();
 
-    ctx.fillStyle = colors.cyan;
+    const flightStatus = player.feeding ? "FEEDING" : player.hidden ? "HIDDEN" : player.z < 0.36 ? "LANDED" : "FLYING";
+    ctx.fillStyle = player.feeding ? colors.coral : player.hidden ? colors.cyan : colors.mint;
     ctx.font = "700 7px Cascadia Mono, monospace";
     ctx.textAlign = "center";
-    ctx.fillText(`ALT ${Math.round(player.z * 100)}%`, player.x, player.y - 27 - player.z * 7);
+    ctx.fillText(flightStatus, player.x, player.y - 27 - player.z * 7);
 
     if (player.feeding) {
       ctx.save();
@@ -974,11 +991,10 @@
 
   function clearInput() {
     input.keys.clear();
+    input.pointerFeed = false;
     input.joystickX = 0;
     input.joystickY = 0;
     input.touchFeed = false;
-    input.touchUp = false;
-    input.touchDown = false;
   }
 
   function setPaused(paused, message = paused ? "Field test paused." : "Field test resumed.") {
@@ -1004,7 +1020,7 @@
     });
   }
 
-  stage.addEventListener("pointerdown", (event) => {
+  function applyStagePointer(event) {
     if (game.state !== "active" && game.state !== "countdown") return;
     stage.focus({ preventScroll: true });
     if (game.paused) {
@@ -1014,8 +1030,14 @@
     const point = pointerToWorld(event);
     input.pointerX = point.x;
     input.pointerY = point.y;
-    input.pointerActive = event.pointerType !== "touch";
-  });
+    const canvasInput = !event.target.closest?.(".touch-controls");
+    input.pointerActive = canvasInput;
+    input.pointerFeed = canvasInput && game.mode === "blood" && distance(point.x, point.y, game.feedTarget.x, game.feedTarget.y) < 105;
+    if (input.pointerFeed) announcer.textContent = "Bite zone selected. Approaching to feed.";
+  }
+
+  stage.addEventListener("pointerdown", applyStagePointer);
+  stage.addEventListener("click", applyStagePointer);
 
   stage.addEventListener("pointermove", (event) => {
     if (game.state !== "active" && game.state !== "countdown") return;
@@ -1027,7 +1049,7 @@
   });
 
   stage.addEventListener("pointerleave", (event) => {
-    if (event.pointerType !== "touch") input.pointerActive = false;
+    if (event.pointerType !== "touch" && !input.pointerFeed) input.pointerActive = false;
   });
 
   window.addEventListener("keydown", (event) => {
@@ -1096,11 +1118,8 @@
   stick.addEventListener("pointercancel", releaseStick);
 
   for (const button of document.querySelectorAll("[data-touch-action]")) {
-    const action = button.dataset.touchAction;
     const setAction = (value) => {
-      if (action === "feed") input.touchFeed = value;
-      if (action === "up") input.touchUp = value;
-      if (action === "down") input.touchDown = value;
+      input.touchFeed = value;
     };
     button.addEventListener("pointerdown", (event) => {
       event.preventDefault();

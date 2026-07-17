@@ -959,7 +959,7 @@ kbd { padding: 3px 7px; border: 1px solid #60717a; background: #111b21; color: #
 
 .touch-actions {
   display: grid;
-  grid-template-columns: repeat(3, 52px);
+  grid-template-columns: 72px;
   gap: 8px;
   pointer-events: auto;
 }
